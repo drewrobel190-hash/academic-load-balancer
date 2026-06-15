@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Dashboard</title>
+
+  <link rel="stylesheet" href="../css/style.css">
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.css" rel="stylesheet">
+
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js"></script>
+</head>
+<body>
+
+<div class="dashboard">
+
+  <aside class="sidebar">
+    <h2>ALB System</h2>
+
+    <ul>
+  <li>
+      <li><a href="dashboard.html">Dashboard</a></li>
+      <li><a href="tasks.html">Tasks</a></li>
+      <li><a href="analytics.html">Analytics</a></li>
+      <li><a href="dashboard.html#calendar">Calendar</a></li>
+</ul>
+  </aside>
+
+  <main class="main-content">
+
+    <div class="topbar">
+      <div class="top-header">
+
+  <h1>Academic Pressure Dashboard</h1>
+
+  <button id="darkModeBtn">
+    🌙 Dark Mode
+  </button>
+  <div class="profile-box">
+
+  <p id="userEmail">
+    user@gmail.com
+  </p>
+
+  <span id="userRole">
+    Student
+  </span>
+
+</div>
+
+</div>
+    </div>
+
+    <div id="warningBox" class="warning-box">
+
+  No Academic Warnings
+
+</div>
+
+    <div class="cards">
+
+      <div class="card">
+        <h3>Total Tasks</h3>
+        <p id="totalTasks">0</p>
+      </div>
+
+      <div class="card">
+        <h3>Pressure Level</h3>
+        <p id="pressureLevel" class="pressure-text">Low</p>
+      </div>
+
+      <div class="card">
+        <h3>Upcoming Deadlines</h3>
+        <p id="deadlines">0</p>
+      </div>
+      <div class="card">
+
+  <h3>Burnout Risk</h3>
+
+  <p id="burnoutRisk">
+    Low
+  </p>
+
+</div>
+
+    </div>
+
+    <div class="chart-container">
+      <canvas id="pressureChart"></canvas>
+    </div>
+    <div class="calendar-container">
+
+  <h2>Academic Workload Calendar</h2>
+
+  <div id="calendar"></div>
+
+</div>
+
+  </main>
+
+</div>
+
+<script type="module" src="../js/dashboard.js"></script>
+
+</body>
+</html>

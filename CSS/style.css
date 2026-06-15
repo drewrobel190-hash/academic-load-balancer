@@ -1,0 +1,325 @@
+body{
+  font-family: Arial, sans-serif;
+  background:#f4f7fb;
+  margin:0;
+  transition:0.3s;
+}
+
+.login-container{
+  background:white;
+  padding:40px;
+  border-radius:12px;
+  width:300px;
+  box-shadow:0 4px 10px rgba(0,0,0,0.1);
+}
+
+input{
+  width:100%;
+  padding:12px;
+  margin-top:10px;
+}
+
+button{
+  width:100%;
+  padding:12px;
+  margin-top:15px;
+  border:none;
+  background:#2563eb;
+  color:white;
+  cursor:pointer;
+  border-radius:8px;
+}
+
+.dashboard{
+  display:flex;
+  width:100%;
+  height:100vh;
+}
+
+.sidebar{
+  width:250px;
+  background:#111827;
+  color:white;
+  padding:20px;
+}
+
+.sidebar ul{
+  list-style:none;
+  padding:0;
+}
+
+.sidebar li{
+  margin:20px 0;
+  cursor:pointer;
+}
+
+.main-content{
+  flex:1;
+  padding:30px;
+}
+
+.topbar{
+  margin-bottom:20px;
+}
+
+.cards{
+  display:flex;
+  gap:20px;
+}
+
+.card{
+  background:white;
+  padding:20px;
+  border-radius:12px;
+  width:200px;
+  box-shadow:0 4px 10px rgba(0,0,0,0.1);
+}
+
+.chart-container{
+  margin-top:40px;
+  background:white;
+  padding:20px;
+  border-radius:12px;
+}
+
+.low{
+  color:green;
+  font-weight:bold;
+}
+
+.moderate{
+  color:orange;
+  font-weight:bold;
+}
+
+.high{
+  color:red;
+  font-weight:bold;
+}
+
+.risk-low{
+  color:green;
+  font-weight:bold;
+}
+
+.risk-moderate{
+  color:orange;
+  font-weight:bold;
+}
+
+.risk-high{
+  color:red;
+  font-weight:bold;
+}
+
+.calendar-container{
+  margin-top:40px;
+  background:white;
+  padding:20px;
+  border-radius:12px;
+}
+
+.warning-box{
+  background:#fef3c7;
+  color:#92400e;
+  padding:15px;
+  border-radius:10px;
+  margin-bottom:20px;
+  font-weight:bold;
+  border-left:6px solid orange;
+}
+
+.warning-high{
+  background:#fee2e2;
+  color:#991b1b;
+  border-left:6px solid red;
+}
+
+.warning-low{
+  background:#dcfce7;
+  color:#166534;
+  border-left:6px solid green;
+}
+
+#calendar{
+  margin-top:20px;
+}
+
+.filter-bar{
+  display:flex;
+  gap:15px;
+  margin-bottom:20px;
+}
+
+.filter-bar input,
+.filter-bar select{
+  padding:12px;
+  border-radius:8px;
+  border:1px solid #ccc;
+}
+
+.task-form{
+  background:white;
+  padding:20px;
+  border-radius:12px;
+  width:400px;
+  display:flex;
+  flex-direction:column;
+  gap:15px;
+  box-shadow:0 4px 10px rgba(0,0,0,0.1);
+}
+
+.task-form select{
+  padding:12px;
+}
+
+.task-item{
+  background:white;
+  padding:15px;
+  margin-top:15px;
+  border-radius:10px;
+  box-shadow:0 4px 10px rgba(0,0,0,0.1);
+}
+
+.sidebar a{
+  color:white;
+  text-decoration:none;
+}
+
+.sidebar a{
+  color:white;
+  text-decoration:none;
+  display:block;
+}
+
+.sidebar a:hover{
+  color:#60a5fa;
+}
+
+.top-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:20px;
+}
+
+#darkModeBtn{
+  padding:10px 15px;
+  border:none;
+  border-radius:8px;
+  cursor:pointer;
+}
+
+.dark-mode{
+  background:#0f172a;
+  color:white;
+}
+
+.dark-mode .card,
+.dark-mode .chart-container,
+.dark-mode .calendar-container,
+.dark-mode .task-form,
+.dark-mode .task-item{
+  background:#1e293b;
+  color:white;
+}
+
+.dark-mode input,
+.dark-mode select{
+  background:#334155;
+  color:white;
+  border:none;
+}
+
+.dark-mode .sidebar{
+  background:#020617;
+}
+
+#toast{
+  position:fixed;
+  top:20px;
+  right:20px;
+  background:#2563eb;
+  color:white;
+  padding:15px 20px;
+  border-radius:10px;
+  opacity:0;
+  pointer-events:none;
+  transition:0.3s;
+  z-index:999;
+}
+
+#toast.show{
+  opacity:1;
+}
+
+.profile-box{
+  background:white;
+  padding:10px 15px;
+  border-radius:10px;
+  box-shadow:0 4px 10px rgba(0,0,0,0.1);
+  margin-top:10px;
+}
+
+.profile-box p{
+  margin:0;
+  font-weight:bold;
+}
+
+.profile-box span{
+  font-size:14px;
+  color:gray;
+}
+
+.dark-mode .profile-box{
+  background:#1e293b;
+  color:white;
+}
+
+/* MOBILE DESIGN */
+@media screen and (max-width: 900px){
+
+  .dashboard{
+    flex-direction:column;
+  }
+
+  .sidebar{
+    width:100%;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:15px;
+  }
+
+  .sidebar ul{
+    display:flex;
+    gap:20px;
+  }
+
+  .main-content{
+    padding:15px;
+  }
+
+  .cards{
+    flex-direction:column;
+  }
+
+  .card{
+    width:100%;
+  }
+
+  .task-form{
+    width:100%;
+  }
+
+  .filter-bar{
+    flex-direction:column;
+  }
+
+  .top-header{
+    flex-direction:column;
+    gap:15px;
+    align-items:flex-start;
+  }
+
+}

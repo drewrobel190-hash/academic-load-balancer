@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Tasks</title>
+
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+
+<div class="dashboard">
+
+  <aside class="sidebar">
+    <h2>ALB System</h2>
+
+    <ul>
+      <li><a href="dashboard.html">Dashboard</a></li>
+      <li><a href="tasks.html">Tasks</a></li>
+      <li><a href="analytics.html">Analytics</a></li>
+      <li><a href="dashboard.html#calendar">Calendar</a></li>
+
+    </ul>
+  </aside>
+
+  <main class="main-content">
+
+    <h1>Add Academic Task</h1>
+
+    <div class="filter-bar">
+
+  <input
+    type="text"
+    id="searchInput"
+    placeholder="Search task..."
+  >
+
+  <select id="filterWorkload">
+
+    <option value="all">
+      All Workloads
+    </option>
+
+    <option value="1">
+      Assignment
+    </option>
+
+    <option value="2">
+      Quiz
+    </option>
+
+    <option value="4">
+      Project
+    </option>
+
+    <option value="5">
+      Exam
+    </option>
+
+  </select>
+
+</div>
+
+    <div class="task-form">
+
+      <input type="text" id="title" placeholder="Task Title">
+
+      <input type="text" id="subject" placeholder="Subject">
+
+      <select id="taskType">
+        <option value="1">Assignment</option>
+        <option value="2">Quiz</option>
+        <option value="4">Project</option>
+        <option value="5">Exam</option>
+      </select>
+
+      <input type="date" id="deadline">
+
+      <button id="saveTaskBtn">Save Task</button>
+
+    </div>
+
+    <div id="taskList"></div>
+
+  </main>
+
+</div>
+
+<div id="toast"></div>
+<script type="module" src="../js/tasks.js"></script>
+
+</body>
+</html>

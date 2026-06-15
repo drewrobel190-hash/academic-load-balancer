@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Analytics</title>
+
+  <link rel="stylesheet" href="../css/style.css">
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+</head>
+<body>
+
+<div class="dashboard">
+
+  <aside class="sidebar">
+    <h2>ALB System</h2>
+
+    <ul>
+      <li><a href="dashboard.html">Dashboard</a></li>
+      <li><a href="tasks.html">Tasks</a></li>
+      <li><a href="analytics.html">Analytics</a></li>
+      <li><a href="dashboard.html#calendar">Calendar</a></li>
+    </ul>
+  </aside>
+
+  <main class="main-content">
+
+    <h1>Academic Analytics</h1>
+    <button id="exportBtn">
+  Export PDF Report
+</button>
+
+    <div class="chart-container">
+      <canvas id="subjectChart"></canvas>
+    </div>
+
+    <div class="chart-container">
+      <canvas id="workloadPieChart"></canvas>
+    </div>
+
+  </main>
+
+</div>
+
+<script type="module" src="../js/analytics.js"></script>
+
+</body>
+</html>
