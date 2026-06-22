@@ -3,92 +3,207 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <title>Tasks</title>
-
+  <title>Tasks | Academic Load Balancer</title>
   <link rel="stylesheet" href="CSS/style.css">
 </head>
-<body>
-
+<body class="app-page">
 <div class="dashboard">
 
-  <aside class="sidebar">
-    <h2>ALB System</h2>
+  <header class="mobile-topbar">
+    <button class="menu-toggle" id="menuToggle" aria-label="Open navigation">
+      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/>
+      </svg>
+    </button>
+    <a href="dashboard.html" class="mobile-brand">
+      <span class="brand-icon" style="width:26px;height:26px;border-radius:6px">
+        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+      </span>
+      ALB System
+    </a>
+  </header>
 
-    <ul>
-      <li><a href="dashboard.html">Dashboard</a></li>
-      <li><a href="tasks.html">Tasks</a></li>
-      <li><a href="analytics.html">Analytics</a></li>
-      <li><a href="dashboard.html#calendar">Calendar</a></li>
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
 
-    </ul>
+  <aside class="sidebar" id="sidebar">
+    <a class="brand" href="dashboard.html">
+      <span class="brand-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+      </span>
+      ALB System
+    </a>
+    <nav aria-label="Primary navigation">
+      <ul>
+        <li><a href="dashboard.html">
+          <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+          Dashboard
+        </a></li>
+        <li><a href="tasks.html" aria-current="page">
+          <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/><line x1="9" y1="12" x2="15" y2="12"/><line x1="9" y1="16" x2="12" y2="16"/></svg>
+          Tasks
+        </a></li>
+        <li><a href="analytics.html">
+          <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+          Analytics
+        </a></li>
+        <li><a href="dashboard.html#calendar">
+          <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          Calendar
+        </a></li>
+        <li><a href="profile.html">
+          <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          Profile
+        </a></li>
+      </ul>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="profile.html" class="sidebar-user-link">
+        <span class="sidebar-avatar" id="sidebarAvatar">?</span>
+        <span class="sidebar-user-info">
+          <span id="sidebarEmail">Loading…</span>
+          <span id="sidebarRole">—</span>
+        </span>
+      </a>
+      <div class="sidebar-footer-actions">
+        <button type="button" id="darkModeToggle" class="sidebar-icon-btn" aria-label="Toggle dark mode" title="Toggle dark mode">
+          <svg id="darkModeIcon" xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </button>
+        <button type="button" id="logoutBtn" class="sidebar-icon-btn" aria-label="Log out" title="Log out">
+          <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+        </button>
+      </div>
+    </div>
   </aside>
 
   <main class="main-content">
+    <header class="page-header">
+      <div>
+        <p class="eyebrow">Manage</p>
+        <h1>Academic Tasks</h1>
+      </div>
+    </header>
 
-    <h1>Add Academic Task</h1>
+    <section class="panel task-panel" aria-labelledby="taskFormTitle">
+      <div class="section-heading">
+        <h2 id="taskFormTitle">Add Academic Task</h2>
+      </div>
+      <form id="taskForm" class="task-form">
+        <div class="field">
+          <label for="title">Task title</label>
+          <input type="text" id="title" placeholder="e.g. Research paper" required>
+        </div>
+        <div class="field">
+          <label for="subject">Subject</label>
+          <input type="text" id="subject" placeholder="e.g. Mathematics" required>
+        </div>
+        <div class="field">
+          <label for="taskType">Task type</label>
+          <select id="taskType">
+            <option value="assignment">Assignment</option>
+            <option value="quiz">Quiz</option>
+            <option value="project">Project</option>
+            <option value="exam">Exam</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="effortScore">Effort / intensity <span class="field-optional">(time needed)</span></label>
+          <select id="effortScore">
+            <option value="1">1 — under 30 minutes</option>
+            <option value="2">2 — 1 to 2 hours</option>
+            <option value="3">3 — 3 to 4 hours</option>
+            <option value="4">4 — full-day effort</option>
+            <option value="5">5 — major project / exam</option>
+          </select>
+        </div>
+        <div class="field field--sections" id="sectionField">
+          <label>Assigned sections <span class="field-optional">(select at least one)</span></label>
+          <div class="admin-section-checklist" id="sectionCheckList" role="group" aria-label="Assigned sections">
+            <span class="admin-section-empty">Loading sections…</span>
+          </div>
+        </div>
+        <div class="field">
+          <label for="deadline">Deadline date</label>
+          <input type="date" id="deadline" required>
+        </div>
+        <div class="field field--time">
+          <label for="deadlineTime">Time <span class="field-optional">(optional)</span></label>
+          <input type="time" id="deadlineTime">
+        </div>
+        <div class="field field--check" id="movableField">
+          <label class="check-row">
+            <input type="checkbox" id="movableInput">
+            <span>
+              <strong>Flexible deadline</strong>
+              <small>The load balancer may suggest moving this to ease a busy day. (Off by default for quizzes &amp; exams.)</small>
+            </span>
+          </label>
+        </div>
+        <div class="form-actions">
+          <button type="submit" id="saveTaskBtn" class="primary-button">Save Task</button>
+          <button type="button" id="cancelEditBtn" class="secondary-button is-hidden">Cancel</button>
+        </div>
+      </form>
+    </section>
 
-    <div class="filter-bar">
-
-  <input
-    type="text"
-    id="searchInput"
-    placeholder="Search task..."
-  >
-
-  <select id="filterWorkload">
-
-    <option value="all">
-      All Workloads
-    </option>
-
-    <option value="1">
-      Assignment
-    </option>
-
-    <option value="2">
-      Quiz
-    </option>
-
-    <option value="4">
-      Project
-    </option>
-
-    <option value="5">
-      Exam
-    </option>
-
-  </select>
-
-</div>
-
-    <div class="task-form">
-
-      <input type="text" id="title" placeholder="Task Title">
-
-      <input type="text" id="subject" placeholder="Subject">
-
-      <select id="taskType">
-        <option value="1">Assignment</option>
-        <option value="2">Quiz</option>
-        <option value="4">Project</option>
-        <option value="5">Exam</option>
-      </select>
-
-      <input type="date" id="deadline">
-
-      <button id="saveTaskBtn">Save Task</button>
-
-    </div>
-
-    <div id="taskList"></div>
-
+    <section class="tasks-section" aria-labelledby="taskListTitle">
+      <div class="section-heading section-heading-row">
+        <h2 id="taskListTitle">Task List</h2>
+        <div class="filter-bar">
+          <label class="sr-only" for="searchInput">Search task</label>
+          <input type="search" id="searchInput" placeholder="Search by title or subject…">
+          <label class="sr-only" for="filterSection">Filter by section</label>
+          <select id="filterSection">
+            <option value="all">All Sections</option>
+          </select>
+          <label class="sr-only" for="filterWorkload">Filter by type</label>
+          <select id="filterWorkload">
+            <option value="all">All Types</option>
+            <option value="assignment">Assignment</option>
+            <option value="quiz">Quiz</option>
+            <option value="project">Project</option>
+            <option value="exam">Exam</option>
+          </select>
+        </div>
+      </div>
+      <div id="taskList" class="task-list" aria-live="polite">
+        <div class="empty-state">Loading tasks…</div>
+      </div>
+    </section>
   </main>
 
 </div>
 
-<div id="toast"></div>
-<script type="module" src="../js/tasks.js"></script>
+<div
+  id="deleteConfirmBackdrop"
+  class="confirm-modal-backdrop"
+  role="dialog"
+  aria-modal="true"
+  aria-labelledby="deleteConfirmTitle"
+  aria-describedby="deleteConfirmMessage"
+  aria-hidden="true"
+>
+  <div class="confirm-modal" tabindex="-1">
+    <div class="confirm-modal-icon" aria-hidden="true">
+      <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="3 6 5 6 21 6"/>
+        <path d="M19 6l-1 14H6L5 6"/>
+        <path d="M10 11v6M14 11v6"/>
+        <path d="M9 6V4h6v2"/>
+      </svg>
+    </div>
+    <h2 id="deleteConfirmTitle" class="confirm-modal-title">Delete this task?</h2>
+    <p id="deleteConfirmMessage" class="confirm-modal-body">
+      Are you sure you want to delete <strong id="deleteTaskName">this task</strong>?
+      This action cannot be undone.
+    </p>
+    <div class="confirm-modal-actions">
+      <button type="button" id="cancelDeleteBtn" class="confirm-btn confirm-btn--cancel">Cancel</button>
+      <button type="button" id="confirmDeleteBtn" class="confirm-btn confirm-btn--danger">Delete task</button>
+    </div>
+  </div>
+</div>
 
+<div id="toast"></div>
+<script type="module" src="js/tasks.js"></script>
 </body>
 </html>

@@ -3,16 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dashboard | Academic Load Balancer</title>
+  <title>Profile | Academic Load Balancer</title>
   <link rel="stylesheet" href="CSS/style.css">
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.css" rel="stylesheet">
-  <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js"></script>
 </head>
 <body class="app-page">
 <div class="dashboard">
 
-  <!-- mobile top bar -->
   <header class="mobile-topbar">
     <button class="menu-toggle" id="menuToggle" aria-label="Open navigation">
       <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -38,7 +34,7 @@
     </a>
     <nav aria-label="Primary navigation">
       <ul>
-        <li><a href="dashboard.html" aria-current="page">
+        <li><a href="dashboard.html">
           <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
           Dashboard
         </a></li>
@@ -54,7 +50,7 @@
           <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
           Calendar
         </a></li>
-        <li><a href="profile.html">
+        <li><a href="profile.html" aria-current="page">
           <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
           Profile
         </a></li>
@@ -82,79 +78,75 @@
   <main class="main-content">
     <header class="page-header">
       <div>
-        <p class="eyebrow">Overview</p>
-        <h1>Academic Pressure Dashboard</h1>
+        <p class="eyebrow">Account</p>
+        <h1>My Profile</h1>
       </div>
     </header>
 
-    <div id="warningBox" class="warning-box">
-      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-      <span id="warningText">Loading…</span>
+    <div class="profile-layout">
+
+      <section class="panel profile-card" aria-labelledby="profileInfoTitle">
+        <div class="section-heading">
+          <h2 id="profileInfoTitle">Account Information</h2>
+        </div>
+        <input type="file" id="photoFileInput" accept="image/*" style="display:none">
+        <div class="profile-avatar-row">
+          <div class="profile-avatar-stack">
+            <div class="profile-avatar-large profile-avatar-uploadable" id="profileAvatarLarge" title="Click to change photo">
+              <img id="profileAvatarImg" src="" alt="" style="display:none;width:100%;height:100%;object-fit:cover;border-radius:50%;">
+              <span id="profileAvatarInitial">?</span>
+              <div class="avatar-upload-overlay" id="avatarUploadOverlay">
+                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+              </div>
+            </div>
+            <button type="button" class="avatar-upload-btn" id="avatarUploadBtn">
+              <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+              Upload Photo
+            </button>
+          </div>
+          <div>
+            <p class="profile-display-name" id="profileDisplayName">Loading…</p>
+            <span class="profile-role-badge" id="profileRoleBadge">—</span>
+          </div>
+        </div>
+        <dl class="profile-details">
+          <div class="profile-detail-row">
+            <dt>Email address</dt>
+            <dd id="profileEmail">—</dd>
+          </div>
+          <div class="profile-detail-row">
+            <dt>Role</dt>
+            <dd id="profileRoleText">—</dd>
+          </div>
+          <div class="profile-detail-row">
+            <dt>Account ID</dt>
+            <dd class="profile-uid" id="profileUid">—</dd>
+          </div>
+        </dl>
+      </section>
+
+      <section class="panel" aria-labelledby="updateNameTitle">
+        <div class="section-heading">
+          <h2 id="updateNameTitle">Update Display Name</h2>
+        </div>
+        <form id="updateNameForm" class="profile-form">
+          <div class="field">
+            <label for="displayNameInput">Display name</label>
+            <input type="text" id="displayNameInput" placeholder="Your full name" maxlength="80">
+          </div>
+          <div class="field">
+            <label for="photoUrlInput">Profile photo URL <span class="field-optional">(optional)</span></label>
+            <input type="url" id="photoUrlInput" placeholder="https://example.com/photo.jpg">
+          </div>
+          <div id="profileFormMsg" class="profile-form-msg is-hidden"></div>
+          <button type="submit" id="updateNameBtn" class="primary-button">Save Changes</button>
+        </form>
+      </section>
+
     </div>
-
-    <div class="cards">
-      <div class="card card--blue">
-        <div class="card-icon">
-          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/><line x1="9" y1="12" x2="15" y2="12"/><line x1="9" y1="16" x2="12" y2="16"/></svg>
-        </div>
-        <div class="card-body"><h3>Total Tasks</h3><p id="totalTasks">—</p></div>
-      </div>
-      <div class="card card--amber">
-        <div class="card-icon">
-          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
-        </div>
-        <div class="card-body"><h3>Pressure Level</h3><p id="pressureLevel" class="pressure-text">—</p></div>
-      </div>
-      <div class="card card--teal">
-        <div class="card-icon">
-          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-        </div>
-        <div class="card-body"><h3>Due This Week</h3><p id="deadlines">—</p></div>
-      </div>
-      <div class="card card--red">
-        <div class="card-icon">
-          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
-        </div>
-        <div class="card-body"><h3>Burnout Risk</h3><p id="burnoutRisk">—</p></div>
-      </div>
-    </div>
-
-    <section class="panel chart-container" aria-labelledby="pressureChartTitle">
-      <div class="section-heading">
-        <h2 id="pressureChartTitle">14-Day Workload Forecast</h2>
-      </div>
-      <p id="pressureChartMessage" class="chart-message">No task data yet.</p>
-      <canvas id="pressureChart" class="is-hidden" aria-label="14-day workload forecast"></canvas>
-      <div id="chartLegend" class="chart-legend"></div>
-    </section>
-
-    <section class="panel balancer-panel is-hidden" id="balancerPanel" aria-labelledby="balancerTitle">
-      <div class="section-heading">
-        <h2 id="balancerTitle">Smart Load Balancing</h2>
-        <span class="balancer-tag">Advisory</span>
-      </div>
-      <p class="chart-message" id="balancerMessage">Analyzing workload…</p>
-      <div id="balancerList" class="balancer-list"></div>
-    </section>
-
-    <section class="panel calendar-container" id="calendar-section" aria-labelledby="calendarTitle">
-      <div class="section-heading">
-        <h2 id="calendarTitle">Academic Workload Calendar</h2>
-      </div>
-      <p id="calendarMessage" class="chart-message">Calendar will appear after tasks load.</p>
-      <div id="heatmapLegend" class="heatmap-legend">
-        <span class="heatmap-legend-label">Daily pressure:</span>
-        <span class="chart-legend-item"><span class="chart-legend-dot" style="background:#16a34a"></span>Low</span>
-        <span class="chart-legend-item"><span class="chart-legend-dot" style="background:#f59e0b"></span>Moderate</span>
-        <span class="chart-legend-item"><span class="chart-legend-dot" style="background:#f97316"></span>High</span>
-        <span class="chart-legend-item"><span class="chart-legend-dot" style="background:#ef4444"></span>Critical</span>
-      </div>
-      <div id="calendar"></div>
-    </section>
   </main>
 
 </div>
-<div id="toast"></div>
-<script type="module" src="js/dashboard.js"></script>
+<script type="module" src="js/profile.js"></script>
 </body>
 </html>

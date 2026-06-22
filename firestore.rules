@@ -1,0 +1,124 @@
+rules_version = '2';
+
+// ════════════════════════════════════════════════════════════════
+// Academic Workload Monitoring and Load Balancing System
+// Firestore Security Rules — enforces the role permission matrix
+// SERVER-SIDE (the UI role checks are convenience only; THIS is the
+// real boundary). Apply via: Firebase Console → Firestore → Rules,
+// or `firebase deploy --only firestore:rules`.
+// ════════════════════════════════════════════════════════════════
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // ── Helpers ──────────────────────────────────────────────
+    function signedIn() {
+      return request.auth != null;
+    }
+    function myEmail() {
+      return request.auth.token.email;
+    }
+    // The requester's own user document (keyed by email).
+    function myDoc() {
+      return get(/databases/$(database)/documents/users/$(myEmail())).data;
+    }
+    function myRole() {
+      return myDoc().role;
+    }
+    function isAdmin() {
+      return signedIn() && myRole() == 'admin';
+    }
+    function isTeacher() {
+      return signedIn() && (myRole() == 'teacher' || myRole() == 'faculty');
+    }
+    function isStaff() {
+      return isAdmin() || isTeacher();
+    }
+
+    // ── users/{email} ────────────────────────────────────────
+    // Students read only themselves; staff read the roster; only
+    // admins change roles/sections. A new user may bootstrap their
+    // OWN doc as a student (matches nav.js first-login behaviour),
+    // and may edit their own profile WITHOUT escalating role/section.
+    match /users/{email} {
+      allow read: if signedIn() && (email == myEmail() || isStaff());
+
+      allow create: if signedIn()
+                    && email == myEmail()
+                    && request.resource.data.role == 'student';
+
+      allow update: if isAdmin()
+                    || (
+                         email == myEmail()
+                         && request.resource.data.role == resource.data.role
+                         && request.resource.data.get('sectionId', '')  == resource.data.get('sectionId', '')
+                         && request.resource.data.get('sectionIds', []) == resource.data.get('sectionIds', [])
+                       );
+
+      allow delete: if isAdmin();
+    }
+
+    // ── sections/{id} ────────────────────────────────────────
+    // Everyone signed in can read; only admins manage sections.
+    match /sections/{id} {
+      allow read:  if signedIn();
+      allow write: if isAdmin();
+    }
+
+    // ── tasks/{id} ───────────────────────────────────────────
+    // All signed-in users can read (client filters by section).
+    // Create: staff only, and they must stamp THEIR OWN uid as owner.
+    // Edit/Delete: admins anything; teachers only tasks they created.
+    //   Legacy tasks (no createdBy) → only admins, since the teacher
+    //   ownership check can't match a missing field.
+    match /tasks/{id} {
+      allow read:   if signedIn();
+
+      allow create: if isStaff()
+                    && request.resource.data.get('createdBy', '') == request.auth.uid;
+
+      allow update: if isAdmin()
+                    || (isTeacher()
+                        && resource.data.get('createdBy', '') == request.auth.uid
+                        && request.resource.data.get('createdBy', '') == resource.data.get('createdBy', ''));
+
+      allow delete: if isAdmin()
+                    || (isTeacher() && resource.data.get('createdBy', '') == request.auth.uid);
+    }
+
+    // ── taskProgress/{uid}/items/{taskId} ────────────────────
+    // Private per-student completion tracking (planned feature).
+    match /taskProgress/{uid}/items/{taskId} {
+      allow read, write: if signedIn() && request.auth.uid == uid;
+    }
+
+    // ── settings/{doc} ───────────────────────────────────────
+    // Workload thresholds etc. Readable by all, writable by admin.
+    match /settings/{doc} {
+      allow read:  if signedIn();
+      allow write: if isAdmin();
+    }
+
+    // ── notifications/{id} ───────────────────────────────────
+    // Staff create; signed-in users read. (Tighten with a
+    // toSection/toUid check once notifications ship.)
+    match /notifications/{id} {
+      allow read:   if signedIn();
+      allow create: if isStaff();
+      allow update: if isStaff() || signedIn(); // allow marking read
+      allow delete: if isAdmin();
+    }
+
+    // ── auditLogs/{id} ───────────────────────────────────────
+    // Append-only from the client; admin-only read; never edited.
+    match /auditLogs/{id} {
+      allow read:   if isAdmin();
+      allow create: if isStaff();
+      allow update, delete: if false;
+    }
+
+    // Default deny everything else.
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

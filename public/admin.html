@@ -3,16 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dashboard | Academic Load Balancer</title>
+  <title>Admin Panel | Academic Load Balancer</title>
   <link rel="stylesheet" href="CSS/style.css">
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.css" rel="stylesheet">
-  <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js"></script>
 </head>
 <body class="app-page">
 <div class="dashboard">
 
-  <!-- mobile top bar -->
   <header class="mobile-topbar">
     <button class="menu-toggle" id="menuToggle" aria-label="Open navigation">
       <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -38,7 +34,7 @@
     </a>
     <nav aria-label="Primary navigation">
       <ul>
-        <li><a href="dashboard.html" aria-current="page">
+        <li><a href="dashboard.html">
           <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
           Dashboard
         </a></li>
@@ -53,6 +49,10 @@
         <li><a href="dashboard.html#calendar">
           <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
           Calendar
+        </a></li>
+        <li><a href="admin.html" aria-current="page">
+          <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          Admin
         </a></li>
         <li><a href="profile.html">
           <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
@@ -82,79 +82,68 @@
   <main class="main-content">
     <header class="page-header">
       <div>
-        <p class="eyebrow">Overview</p>
-        <h1>Academic Pressure Dashboard</h1>
+        <p class="eyebrow">Administration</p>
+        <h1>Admin Panel</h1>
       </div>
     </header>
 
-    <div id="warningBox" class="warning-box">
-      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-      <span id="warningText">Loading…</span>
+    <!-- System overview chips -->
+    <div id="adminStats" class="analytics-stats"></div>
+
+    <!-- At-risk students alert -->
+    <div id="atRiskSection" class="panel is-hidden" aria-labelledby="atRiskTitle">
+      <div class="section-heading">
+        <h2 id="atRiskTitle">High-Load Alerts</h2>
+        <span class="admin-badge admin-badge--red" id="atRiskCount">0</span>
+      </div>
+      <p class="chart-message" id="atRiskMessage">No high-load alerts.</p>
+      <ul id="atRiskList" class="admin-alert-list"></ul>
     </div>
 
-    <div class="cards">
-      <div class="card card--blue">
-        <div class="card-icon">
-          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/><line x1="9" y1="12" x2="15" y2="12"/><line x1="9" y1="16" x2="12" y2="16"/></svg>
-        </div>
-        <div class="card-body"><h3>Total Tasks</h3><p id="totalTasks">—</p></div>
-      </div>
-      <div class="card card--amber">
-        <div class="card-icon">
-          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
-        </div>
-        <div class="card-body"><h3>Pressure Level</h3><p id="pressureLevel" class="pressure-text">—</p></div>
-      </div>
-      <div class="card card--teal">
-        <div class="card-icon">
-          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-        </div>
-        <div class="card-body"><h3>Due This Week</h3><p id="deadlines">—</p></div>
-      </div>
-      <div class="card card--red">
-        <div class="card-icon">
-          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
-        </div>
-        <div class="card-body"><h3>Burnout Risk</h3><p id="burnoutRisk">—</p></div>
-      </div>
-    </div>
-
-    <section class="panel chart-container" aria-labelledby="pressureChartTitle">
+    <!-- Section management -->
+    <section class="panel" aria-labelledby="sectionMgmtTitle">
       <div class="section-heading">
-        <h2 id="pressureChartTitle">14-Day Workload Forecast</h2>
+        <h2 id="sectionMgmtTitle">Sections</h2>
+        <span class="admin-badge admin-badge--blue" id="sectionCount">0</span>
       </div>
-      <p id="pressureChartMessage" class="chart-message">No task data yet.</p>
-      <canvas id="pressureChart" class="is-hidden" aria-label="14-day workload forecast"></canvas>
-      <div id="chartLegend" class="chart-legend"></div>
+
+      <form id="createSectionForm" class="admin-create-form">
+        <input type="text" id="sectionNameInput" placeholder="Section name (e.g. BSIT 2A)" maxlength="60" required>
+        <button type="submit" class="primary-button" style="white-space:nowrap">+ Add Section</button>
+      </form>
+
+      <div id="sectionList" class="admin-section-list">
+        <p class="chart-message">No sections yet.</p>
+      </div>
     </section>
 
-    <section class="panel balancer-panel is-hidden" id="balancerPanel" aria-labelledby="balancerTitle">
+    <!-- User management -->
+    <section class="panel" aria-labelledby="userMgmtTitle">
       <div class="section-heading">
-        <h2 id="balancerTitle">Smart Load Balancing</h2>
-        <span class="balancer-tag">Advisory</span>
+        <h2 id="userMgmtTitle">User Management</h2>
+        <div class="filter-bar" style="margin:0">
+          <input type="search" id="userSearch" placeholder="Search by email…" style="min-width:220px">
+        </div>
       </div>
-      <p class="chart-message" id="balancerMessage">Analyzing workload…</p>
-      <div id="balancerList" class="balancer-list"></div>
+      <p id="userTableMessage" class="chart-message">Loading users…</p>
+      <div class="admin-table-wrap">
+        <table class="admin-table is-hidden" id="userTable">
+          <thead>
+            <tr>
+              <th>User</th>
+              <th>Current Role</th>
+              <th>Change Role</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody id="userTableBody"></tbody>
+        </table>
+      </div>
     </section>
 
-    <section class="panel calendar-container" id="calendar-section" aria-labelledby="calendarTitle">
-      <div class="section-heading">
-        <h2 id="calendarTitle">Academic Workload Calendar</h2>
-      </div>
-      <p id="calendarMessage" class="chart-message">Calendar will appear after tasks load.</p>
-      <div id="heatmapLegend" class="heatmap-legend">
-        <span class="heatmap-legend-label">Daily pressure:</span>
-        <span class="chart-legend-item"><span class="chart-legend-dot" style="background:#16a34a"></span>Low</span>
-        <span class="chart-legend-item"><span class="chart-legend-dot" style="background:#f59e0b"></span>Moderate</span>
-        <span class="chart-legend-item"><span class="chart-legend-dot" style="background:#f97316"></span>High</span>
-        <span class="chart-legend-item"><span class="chart-legend-dot" style="background:#ef4444"></span>Critical</span>
-      </div>
-      <div id="calendar"></div>
-    </section>
   </main>
-
 </div>
 <div id="toast"></div>
-<script type="module" src="js/dashboard.js"></script>
+<script type="module" src="js/admin.js"></script>
 </body>
 </html>
